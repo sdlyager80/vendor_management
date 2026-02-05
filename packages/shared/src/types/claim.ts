@@ -78,3 +78,37 @@ export interface ClaimContext {
   carrierName?: string;
   policyNumber?: string;
 }
+
+/**
+ * Simplified Claim for list views
+ */
+export interface Claim {
+  claimNumber: string;
+  claimantName: string;
+  carrierName: string;
+  claimType: ClaimType;
+  claimStatus: ClaimStatus;
+  dateOfLoss: string;
+  totalHours: number;
+  totalAmount: number;
+  adjusterName: string;
+  adjusterId: string;
+}
+
+/**
+ * Assure Claims Event
+ */
+export interface AssureClaimsEvent {
+  id: string;
+  claimNumber: string;
+  eventType: 'DOCUMENT_UPLOAD' | 'STATUS_CHANGE' | 'EMAIL_SENT' | 'PHONE_LOG' | 'NOTE_ADDED' | 'ESTIMATE_UPDATED';
+  eventTitle: string;
+  eventDescription: string;
+  timestamp: string;
+  autoCapture: boolean;
+  autoBillAmount?: number;
+  activityCodeId?: string;
+  status: 'PENDING_REVIEW' | 'AUTO_BILLED' | 'IGNORED';
+  userId?: string;
+  userName?: string;
+}

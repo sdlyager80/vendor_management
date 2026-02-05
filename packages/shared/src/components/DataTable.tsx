@@ -1,4 +1,4 @@
-import { DxcTable } from '@dxc-technology/halstack-react';
+import { DxcTypography } from '@dxc-technology/halstack-react';
 import { LoadingSpinner } from './LoadingSpinner';
 import { EmptyState } from './EmptyState';
 
@@ -33,7 +33,7 @@ export function DataTable<T extends Record<string, any>>({
   }
 
   return (
-    <DxcTable>
+    <table className="data-table">
       <thead>
         <tr>
           {columns.map((col) => (
@@ -58,6 +58,6 @@ export function DataTable<T extends Record<string, any>>({
           </tr>
         ))}
       </tbody>
-    </DxcTable>
+    </table>
   );
 }

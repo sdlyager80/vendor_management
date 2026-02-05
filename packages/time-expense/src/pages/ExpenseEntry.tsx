@@ -65,7 +65,7 @@ export default function ExpenseEntryPage() {
         amount: parseFloat(formData.amount),
         quantity: formData.quantity ? parseFloat(formData.quantity) : undefined,
         receiptAttached: false,
-        status: 'DRAFT',
+        status: 'PENDING',
         notes: formData.notes,
         createdBy: 'ADJ-001',
         createdDate: new Date().toISOString(),
@@ -240,7 +240,7 @@ export default function ExpenseEntryPage() {
               key: 'actions',
               header: 'Actions',
               render: (row) =>
-                row.status === 'DRAFT' ? (
+                row.status === 'PENDING' ? (
                   <DxcButton
                     label="Delete"
                     mode="text"

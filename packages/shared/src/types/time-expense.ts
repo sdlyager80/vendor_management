@@ -9,8 +9,7 @@ export enum CaptureType {
 }
 
 export enum TimeEntryStatus {
-  DRAFT = 'DRAFT',
-  SUBMITTED = 'SUBMITTED',
+  PENDING = 'PENDING',
   APPROVED = 'APPROVED',
   REJECTED = 'REJECTED',
   BILLED = 'BILLED',

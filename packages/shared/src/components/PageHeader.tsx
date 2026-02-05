@@ -1,4 +1,4 @@
-import { DxcHeading, DxcFlex, DxcButton } from '@dxc-technology/halstack-react';
+import { DxcHeading, DxcFlex, DxcButton, DxcTypography } from '@dxc-technology/halstack-react';
 
 interface PageHeaderProps {
   title: string;
@@ -15,19 +15,23 @@ export function PageHeader({ title, subtitle, actions }: PageHeaderProps) {
     <DxcFlex
       justifyContent="space-between"
       alignItems="flex-start"
-      style={{ marginBottom: '2rem' }}
+      style={{ marginBottom: 'var(--spacing-gap-l)' }}
     >
       <div>
         <DxcHeading level={1} text={title} />
         {subtitle && (
-          <p style={{ margin: '0.5rem 0 0 0', color: '#666', fontSize: '1rem' }}>
+          <DxcTypography
+            fontSize="font-scale-03"
+            color="var(--color-fg-neutral-stronger)"
+            style={{ marginTop: 'var(--spacing-gap-xs)' }}
+          >
             {subtitle}
-          </p>
+          </DxcTypography>
         )}
       </div>
 
       {actions && actions.length > 0 && (
-        <DxcFlex gap="0.75rem">
+        <DxcFlex gap="var(--spacing-gap-m)">
           {actions.map((action, index) => (
             <DxcButton
               key={index}

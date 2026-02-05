@@ -7,7 +7,7 @@ interface LoadingSpinnerProps {
 
 export function LoadingSpinner({ text = 'Loading...', fullScreen = false }: LoadingSpinnerProps) {
   const content = (
-    <DxcFlex direction="column" gap="1rem" alignItems="center" justifyContent="center">
+    <DxcFlex direction="column" gap="var(--spacing-gap-m)" alignItems="center" justifyContent="center">
       <DxcSpinner mode="large" label={text} />
     </DxcFlex>
   );
@@ -23,7 +23,7 @@ export function LoadingSpinner({ text = 'Loading...', fullScreen = false }: Load
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
         zIndex: 9999,
       }}>
         {content}
@@ -32,7 +32,7 @@ export function LoadingSpinner({ text = 'Loading...', fullScreen = false }: Load
   }
 
   return (
-    <div style={{ padding: '3rem', textAlign: 'center' }}>
+    <div style={{ padding: 'var(--spacing-padding-xl)', textAlign: 'center' }}>
       {content}
     </div>
   );

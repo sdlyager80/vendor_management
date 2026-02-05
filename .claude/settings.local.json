@@ -10,7 +10,12 @@
       "Bash(npm view:*)",
       "Bash(npm install:*)",
       "Bash(npm run build:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(npm run dev:*)",
+      "WebSearch",
+      "WebFetch(domain:developer.dxc.com)",
+      "Bash(curl:*)",
+      "Bash(git remote add:*)"
     ]
   }
 }

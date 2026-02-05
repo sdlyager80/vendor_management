@@ -11,6 +11,7 @@ const statusColorMap: Record<string, 'success' | 'error' | 'warning' | 'info'> =
   COMPLETED: 'success',
   ACCEPTED: 'success',
   PAID: 'success',
+  BILLED: 'success',
 
   INACTIVE: 'error',
   REJECTED: 'error',
@@ -25,8 +26,6 @@ const statusColorMap: Record<string, 'success' | 'error' | 'warning' | 'info'> =
 
   PROSPECTIVE: 'info',
   ASSIGNED: 'info',
-  SUBMITTED: 'info',
-  DRAFT: 'info',
 };
 
 export function StatusBadge({ status, variant }: StatusBadgeProps) {

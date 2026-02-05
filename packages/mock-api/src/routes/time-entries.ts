@@ -46,7 +46,7 @@ router.get('/stats', (req: Request, res: Response) => {
     todayHours: todayEntries.reduce((sum, t) => sum + t.duration, 0),
     weekHours: filtered.reduce((sum, t) => sum + t.duration, 0),
     monthHours: filtered.reduce((sum, t) => sum + t.duration, 0),
-    pendingEntries: filtered.filter((t) => t.status === 'DRAFT').length,
+    pendingEntries: filtered.filter((t) => t.status === 'PENDING').length,
     autoCaptured: filtered.filter((t) => t.captureType === 'AUTO').length,
   };
 
@@ -143,7 +143,7 @@ router.post('/submit', (req: Request, res: Response) => {
   entryIds.forEach((id: string) => {
     const entry = mockTimeEntries.find((t) => t.id === id);
     if (entry) {
-      entry.status = 'SUBMITTED';
+      entry.status = 'APPROVED';
       entry.submittedDate = new Date().toISOString();
     }
   });

@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present",
+    "dev": "concurrently \"npm:dev:*\"",
     "dev:vendor": "npm run dev --workspace=packages/vendor-management",
     "dev:time-expense": "npm run dev --workspace=packages/time-expense",
     "dev:mock-api": "npm run dev --workspace=packages/mock-api",
@@ -22,6 +22,7 @@
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
+    "concurrently": "^9.2.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",

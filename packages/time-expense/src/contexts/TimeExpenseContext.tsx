@@ -1,11 +1,15 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { TimeEntry, ExpenseEntry, ClaimContext, TimerSession } from '@shared/types';
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
+import { TimeEntry, ExpenseEntry, ClaimContext, TimerSession, Adjuster } from '@shared/types';
+import { adjusterService } from '../services/adjusterService';
 
 interface TimeExpenseContextType {
   timeEntries: TimeEntry[];
   expenseEntries: ExpenseEntry[];
   claimContext: ClaimContext | null;
   activeTimer: TimerSession | null;
+  currentAdjuster: Adjuster | null;
+  adjusters: Adjuster[];
+  setCurrentAdjuster: (adjuster: Adjuster) => void;
   setClaimContext: (context: ClaimContext | null) => void;
   startTimer: (claimNumber: string, activityCodeId: string) => void;
   stopTimer: () => void;
@@ -20,19 +24,42 @@ export function TimeExpenseProvider({ children }: { children: ReactNode }) {
   const [expenseEntries, setExpenseEntries] = useState<ExpenseEntry[]>([]);
   const [claimContext, setClaimContext] = useState<ClaimContext | null>(null);
   const [activeTimer, setActiveTimer] = useState<TimerSession | null>(null);
+  const [currentAdjuster, setCurrentAdjuster] = useState<Adjuster | null>(null);
+  const [adjusters, setAdjusters] = useState<Adjuster[]>([]);
+
+  // Load adjusters on mount
+  useEffect(() => {
+    const loadAdjusters = async () => {
+      try {
+        const data = await adjusterService.getAdjusters();
+        setAdjusters(data);
+        // Set first adjuster as default (Sarah Johnson - Senior Adjuster)
+        if (data.length > 0) {
+          setCurrentAdjuster(data[0]);
+        }
+      } catch (error) {
+        console.error('Failed to load adjusters:', error);
+      }
+    };
+    loadAdjusters();
+  }, []);
 
   const startTimer = useCallback((claimNumber: string, activityCodeId: string) => {
+    if (!currentAdjuster) {
+      console.error('No adjuster selected');
+      return;
+    }
     const newTimer: TimerSession = {
       id: `TIMER-${Date.now()}`,
       claimNumber,
-      adjusterId: 'ADJ-001', // TODO: Get from auth context
+      adjusterId: currentAdjuster.id,
       activityCodeId,
       startTime: new Date().toISOString(),
       elapsedSeconds: 0,
       isActive: true,
     };
     setActiveTimer(newTimer);
-  }, []);
+  }, [currentAdjuster]);
 
   const stopTimer = useCallback(() => {
     if (activeTimer) {
@@ -58,6 +85,9 @@ export function TimeExpenseProvider({ children }: { children: ReactNode }) {
         expenseEntries,
         claimContext,
         activeTimer,
+        currentAdjuster,
+        adjusters,
+        setCurrentAdjuster,
         setClaimContext,
         startTimer,
         stopTimer,

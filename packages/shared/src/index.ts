@@ -5,4 +5,6 @@
 export * from './types';
 export * from './utils';
 export * from './hooks';
-export * from './components';
+
+// Theme and Components exported separately to avoid loading React in non-browser contexts
+// Import from '@shared/components' or '@shared/theme' when needed in React apps

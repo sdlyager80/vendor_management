@@ -1,0 +1,29 @@
+/* Dashboard Styles */
+
+.dashboard-container {
+  padding: var(--spacing-padding-l);
+  width: 100%;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 64px);
+}
+
+.dashboard-card {
+  background-color: var(--color-bg-neutral-lightest);
+  border-radius: var(--border-radius-m);
+  box-shadow: var(--shadow-mid-02);
+  padding: var(--spacing-padding-l);
+}
+
+.referral-card {
+  background-color: var(--color-bg-neutral-lightest);
+  border: 1px solid var(--color-border-neutral-lighter);
+  border-radius: var(--border-radius-m);
+  padding: var(--spacing-padding-m);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.referral-card:hover {
+  box-shadow: var(--shadow-mid-02);
+  border-color: var(--color-blue-600);
+}

@@ -9,6 +9,8 @@ import { timeEntriesRouter } from './routes/time-entries.js';
 import { expenseEntriesRouter } from './routes/expense-entries.js';
 import { activityCodesRouter } from './routes/activity-codes.js';
 import { expenseTypesRouter } from './routes/expense-types.js';
+import { adjustersRouter } from './routes/adjusters.js';
+import { claimsRouter } from './routes/claims.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,6 +39,8 @@ app.use('/api/v1/time-entries', timeEntriesRouter);
 app.use('/api/v1/expense-entries', expenseEntriesRouter);
 app.use('/api/v1/activity-codes', activityCodesRouter);
 app.use('/api/v1/expense-types', expenseTypesRouter);
+app.use('/api/v1/adjusters', adjustersRouter);
+app.use('/api/v1/claims', claimsRouter);
 
 // Health check
 app.get('/health', (_req, res) => {
@@ -55,6 +59,8 @@ app.get('/api/v1', (_req, res) => {
       expenseEntries: '/api/v1/expense-entries',
       activityCodes: '/api/v1/activity-codes',
       expenseTypes: '/api/v1/expense-types',
+      adjusters: '/api/v1/adjusters',
+      claims: '/api/v1/claims',
       assureClaims: '/api/v1/assure',
       serviceNow: '/api/v1/servicenow',
     },
@@ -75,6 +81,8 @@ app.listen(PORT, () => {
   console.log(`   Invoices:       http://localhost:${PORT}/api/v1/invoices`);
   console.log(`   Time Entries:   http://localhost:${PORT}/api/v1/time-entries`);
   console.log(`   Expense Types:  http://localhost:${PORT}/api/v1/expense-types`);
+  console.log(`   Adjusters:      http://localhost:${PORT}/api/v1/adjusters`);
+  console.log(`   Claims:         http://localhost:${PORT}/api/v1/claims`);
   console.log(`   Assure Claims:  http://localhost:${PORT}/api/v1/assure`);
   console.log(`   ServiceNow:     http://localhost:${PORT}/api/v1/servicenow\n`);
 });

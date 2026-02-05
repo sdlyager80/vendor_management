@@ -28,7 +28,7 @@ export default function Dashboard() {
       setLoading(true);
       const [timeStats, entries] = await Promise.all([
         timeEntryService.getTimeEntryStats(),
-        timeEntryService.getTimeEntries({ status: 'DRAFT' }),
+        timeEntryService.getTimeEntries({ status: 'PENDING' }),
       ]);
 
       setStats(timeStats);

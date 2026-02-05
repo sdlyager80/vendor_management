@@ -1,4 +1,4 @@
-import { DxcFlex, DxcHeading, DxcParagraph, DxcButton } from '@dxc-technology/halstack-react';
+import { DxcFlex, DxcHeading, DxcTypography, DxcButton } from '@dxc-technology/halstack-react';
 
 interface EmptyStateProps {
   title: string;
@@ -12,19 +12,23 @@ export function EmptyState({ title, description, actionLabel, onAction, icon }: 
   return (
     <DxcFlex
       direction="column"
-      gap="1.5rem"
+      gap="var(--spacing-gap-l)"
       alignItems="center"
       justifyContent="center"
-      style={{ padding: '4rem 2rem', textAlign: 'center' }}
+      style={{ padding: 'var(--spacing-padding-xl) var(--spacing-padding-l)', textAlign: 'center' }}
     >
       {icon && <div style={{ fontSize: '3rem', opacity: 0.3 }}>{icon}</div>}
 
       <DxcHeading level={3} text={title} />
 
       {description && (
-        <DxcParagraph style={{ maxWidth: '500px', color: '#666' }}>
+        <DxcTypography
+          fontSize="font-scale-03"
+          color="var(--color-fg-neutral-stronger)"
+          style={{ maxWidth: '500px' }}
+        >
           {description}
-        </DxcParagraph>
+        </DxcTypography>
       )}
 
       {actionLabel && onAction && (

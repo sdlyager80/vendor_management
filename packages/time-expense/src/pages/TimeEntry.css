@@ -1,0 +1,28 @@
+/* Time Entry Page Styles */
+
+.time-entry-container {
+  padding: var(--spacing-padding-l);
+  width: 100%;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 64px);
+}
+
+.time-entry-card {
+  background-color: var(--color-bg-neutral-lightest, #ffffff);
+  border-radius: var(--border-radius-m, 8px);
+  box-shadow: var(--shadow-mid-02, 0 2px 8px rgba(0,0,0,0.1));
+  padding: var(--spacing-padding-l, 24px);
+}
+
+.timer-card {
+  background: linear-gradient(135deg, #4DD0E1 0%, #0095FF 100%);
+  border-radius: var(--border-radius-m);
+  box-shadow: var(--shadow-mid-02);
+  padding: var(--spacing-padding-l);
+}
+
+.timer-card h4,
+.timer-card p {
+  color: #FFFFFF;
+  margin: 0;
+}
