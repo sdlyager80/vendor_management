@@ -45,62 +45,65 @@ export default function VendorDetails() {
 
   if (!vendor) {
     return (
-      <DxcFlex direction="column" gap="1rem" style={{ padding: '2rem' }}>
-        <DxcHeading level={1} text="Vendor not found" />
-        <DxcButton label="Back to Vendors" onClick={() => navigate('/vendors')} />
-      </DxcFlex>
+      <div className="page-container">
+        <DxcFlex direction="column" gap="var(--spacing-gap-m)">
+          <DxcHeading level={1} text="Vendor not found" />
+          <DxcButton label="Back to Vendors" onClick={() => navigate('/vendors')} />
+        </DxcFlex>
+      </div>
     );
   }
 
   const primaryContact = vendor.contacts.find((c) => c.isPrimary);
 
   return (
-    <DxcFlex direction="column" gap="1.5rem" style={{ padding: '2rem' }}>
-      <PageHeader
-        title={vendor.legalName}
-        subtitle={`${vendor.id} • ${vendor.vendorType.replace(/_/g, ' ')}`}
-        actions={[
-          {
-            label: 'Create Referral',
-            onClick: () =>
-              navigate('/referrals/new', { state: { vendorId: vendor.id } }),
-            mode: 'primary',
-          },
-          {
-            label: 'Edit',
-            onClick: () => navigate(`/vendors/${vendor.id}/edit`),
-            mode: 'secondary',
-          },
-        ]}
-      />
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-l)">
+        <PageHeader
+          title={vendor.legalName}
+          subtitle={`${vendor.id} • ${vendor.vendorType.replace(/_/g, ' ')}`}
+          actions={[
+            {
+              label: 'Create Referral',
+              onClick: () =>
+                navigate('/referrals/new', { state: { vendorId: vendor.id } }),
+              mode: 'primary',
+            },
+            {
+              label: 'Edit',
+              onClick: () => navigate(`/vendors/${vendor.id}/edit`),
+              mode: 'secondary',
+            },
+          ]}
+        />
 
-      {/* Status Card */}
-      <DxcCard style={{ padding: '1.5rem' }}>
-        <DxcFlex gap="2rem" alignItems="center">
-          <div>
-            <DxcParagraph style={{ margin: 0, marginBottom: '0.5rem', fontWeight: 600 }}>
-              Status
-            </DxcParagraph>
-            <StatusBadge status={vendor.status} />
-          </div>
-          <div>
-            <DxcParagraph style={{ margin: 0, marginBottom: '0.5rem', fontWeight: 600 }}>
-              Service Territory
-            </DxcParagraph>
-            <DxcParagraph style={{ margin: 0 }}>
-              {vendor.serviceTerritory.join(', ')}
-            </DxcParagraph>
-          </div>
-          <div>
-            <DxcParagraph style={{ margin: 0, marginBottom: '0.5rem', fontWeight: 600 }}>
-              TIN
-            </DxcParagraph>
-            <DxcParagraph style={{ margin: 0 }}>
-              {vendor.tin.replace(/(\d{2})(\d{7})/, '$1-$2')}
-            </DxcParagraph>
-          </div>
-        </DxcFlex>
-      </DxcCard>
+        {/* Status Card */}
+        <div className="content-card">
+          <DxcFlex gap="var(--spacing-gap-xl)" alignItems="center">
+            <div>
+              <DxcParagraph style={{ margin: 0, marginBottom: '0.5rem', fontWeight: 600 }}>
+                Status
+              </DxcParagraph>
+              <StatusBadge status={vendor.status} />
+            </div>
+            <div>
+              <DxcParagraph style={{ margin: 0, marginBottom: '0.5rem', fontWeight: 600 }}>
+                Service Territory
+              </DxcParagraph>
+              <DxcParagraph style={{ margin: 0 }}>
+                {vendor.serviceTerritory.join(', ')}
+              </DxcParagraph>
+            </div>
+            <div>
+              <DxcParagraph style={{ margin: 0, marginBottom: '0.5rem', fontWeight: 600 }}>
+                TIN
+              </DxcParagraph>
+              <DxcParagraph style={{ margin: 0 }}>
+                {vendor.tin.replace(/(\d{2})(\d{7})/, '$1-$2')}
+              </DxcParagraph>
+            </div>
+          </DxcFlex>
+        </div>
 
       {/* Tabs */}
       <DxcTabs
@@ -124,10 +127,10 @@ export default function VendorDetails() {
 
       {/* Tab Content */}
       {activeTab === 0 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="Corporate Information" />
 
-          <DxcFlex direction="column" gap="1rem" style={{ marginTop: '1rem' }}>
+          <DxcFlex direction="column" gap="var(--spacing-gap-m)" style={{ marginTop: '1rem' }}>
             <div>
               <DxcParagraph style={{ margin: 0, fontWeight: 600 }}>
                 Corporate Address
@@ -151,14 +154,14 @@ export default function VendorDetails() {
               </DxcParagraph>
             </div>
           </DxcFlex>
-        </DxcCard>
+        </div>
       )}
 
       {activeTab === 1 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="Contacts" />
 
-          <DxcFlex direction="column" gap="1.5rem" style={{ marginTop: '1rem' }}>
+          <DxcFlex direction="column" gap="var(--spacing-gap-l)" style={{ marginTop: '1rem' }}>
             {vendor.contacts.map((contact) => (
               <div key={contact.id}>
                 <DxcParagraph style={{ margin: 0, fontWeight: 600 }}>
@@ -173,22 +176,23 @@ export default function VendorDetails() {
               </div>
             ))}
           </DxcFlex>
-        </DxcCard>
+        </div>
       )}
 
       {activeTab === 2 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="Documents" />
           <DxcParagraph>Document management coming soon</DxcParagraph>
-        </DxcCard>
+        </div>
       )}
 
       {activeTab === 3 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="Performance Metrics" />
           <DxcParagraph>Performance tracking coming soon</DxcParagraph>
-        </DxcCard>
+        </div>
       )}
-    </DxcFlex>
+      </DxcFlex>
+    </div>
   );
 }

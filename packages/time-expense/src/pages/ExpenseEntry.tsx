@@ -105,7 +105,8 @@ export default function ExpenseEntryPage() {
   }
 
   return (
-    <DxcFlex direction="column" gap="1.5rem" style={{ padding: '2rem' }}>
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-l)">
       <PageHeader
         title="Expense Entry"
         subtitle={`${expenses.length} expenses`}
@@ -120,10 +121,10 @@ export default function ExpenseEntryPage() {
 
       {/* Entry Form */}
       {showForm && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="New Expense Entry" />
 
-          <DxcFlex direction="column" gap="1rem" style={{ marginTop: '1rem' }}>
+          <DxcFlex direction="column" gap="var(--spacing-gap-m)" style={{ marginTop: '1rem' }}>
             <DxcTextInput
               label="Claim Number"
               value={formData.claimNumber}
@@ -200,11 +201,11 @@ export default function ExpenseEntryPage() {
               />
             </DxcFlex>
           </DxcFlex>
-        </DxcCard>
+        </div>
       )}
 
       {/* Expenses Table */}
-      <DxcCard style={{ padding: '1.5rem' }}>
+      <div className="content-card">
         <DxcHeading level={3} text="Expense Entries" />
 
         <DataTable
@@ -255,7 +256,8 @@ export default function ExpenseEntryPage() {
           data={expenses}
           emptyMessage="No expense entries found"
         />
-      </DxcCard>
-    </DxcFlex>
+      </div>
+      </DxcFlex>
+    </div>
   );
 }

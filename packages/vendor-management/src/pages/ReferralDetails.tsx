@@ -58,16 +58,19 @@ export default function ReferralDetails() {
 
   if (!referral) {
     return (
-      <DxcFlex direction="column" gap="1rem" style={{ padding: '2rem' }}>
-        <DxcHeading level={1} text="Referral not found" />
-        <DxcButton label="Back to Referrals" onClick={() => navigate('/referrals')} />
-      </DxcFlex>
+      <div className="page-container">
+        <DxcFlex direction="column" gap="var(--spacing-gap-m)">
+          <DxcHeading level={1} text="Referral not found" />
+          <DxcButton label="Back to Referrals" onClick={() => navigate('/referrals')} />
+        </DxcFlex>
+      </div>
     );
   }
 
   return (
-    <DxcFlex direction="column" gap="1.5rem" style={{ padding: '2rem' }}>
-      <PageHeader
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-l)">
+        <PageHeader
         title={`Referral ${referral.referralNumber}`}
         subtitle={`Claim ${referral.claimNumber} • ${referral.claimantName}`}
         actions={[
@@ -80,8 +83,8 @@ export default function ReferralDetails() {
       />
 
       {/* Status Card */}
-      <DxcCard style={{ padding: '1.5rem' }}>
-        <DxcFlex gap="2rem" alignItems="center" wrap="wrap">
+      <div className="content-card">
+        <DxcFlex gap="var(--spacing-gap-xl)" alignItems="center" wrap="wrap">
           <div>
             <DxcParagraph style={{ margin: 0, marginBottom: '0.5rem', fontWeight: 600 }}>
               Status
@@ -121,11 +124,11 @@ export default function ReferralDetails() {
       </DxcCard>
 
       {/* Referral Details */}
-      <DxcCard style={{ padding: '1.5rem' }}>
+      <div className="content-card">
         <DxcHeading level={3} text="Referral Information" />
 
-        <DxcFlex direction="column" gap="1.5rem" style={{ marginTop: '1rem' }}>
-          <DxcFlex gap="2rem" wrap="wrap">
+        <DxcFlex direction="column" gap="var(--spacing-gap-l)" style={{ marginTop: '1rem' }}>
+          <DxcFlex gap="var(--spacing-gap-xl)" wrap="wrap">
             <div style={{ flex: 1, minWidth: '200px' }}>
               <DxcParagraph style={{ margin: 0, fontWeight: 600 }}>Vendor</DxcParagraph>
               <DxcParagraph style={{ margin: 0 }}>{referral.vendorName}</DxcParagraph>
@@ -144,7 +147,7 @@ export default function ReferralDetails() {
             </div>
           </DxcFlex>
 
-          <DxcFlex gap="2rem" wrap="wrap">
+          <DxcFlex gap="var(--spacing-gap-xl)" wrap="wrap">
             <div style={{ flex: 1, minWidth: '200px' }}>
               <DxcParagraph style={{ margin: 0, fontWeight: 600 }}>Assigned Date</DxcParagraph>
               <DxcParagraph style={{ margin: 0 }}>
@@ -182,11 +185,11 @@ export default function ReferralDetails() {
       </DxcCard>
 
       {/* Claim Context */}
-      <DxcCard style={{ padding: '1.5rem' }}>
+      <div className="content-card">
         <DxcHeading level={3} text="Claim Information" />
 
-        <DxcFlex direction="column" gap="1rem" style={{ marginTop: '1rem' }}>
-          <DxcFlex gap="2rem" wrap="wrap">
+        <DxcFlex direction="column" gap="var(--spacing-gap-m)" style={{ marginTop: '1rem' }}>
+          <DxcFlex gap="var(--spacing-gap-xl)" wrap="wrap">
             <div style={{ flex: 1, minWidth: '200px' }}>
               <DxcParagraph style={{ margin: 0, fontWeight: 600 }}>Claim Number</DxcParagraph>
               <DxcParagraph style={{ margin: 0 }}>{referral.claimNumber}</DxcParagraph>
@@ -212,7 +215,8 @@ export default function ReferralDetails() {
             </div>
           </DxcFlex>
         </DxcFlex>
-      </DxcCard>
-    </DxcFlex>
+      </div>
+      </DxcFlex>
+    </div>
   );
 }

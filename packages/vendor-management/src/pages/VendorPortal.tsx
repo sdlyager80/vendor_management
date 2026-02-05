@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { DxcFlex, DxcCard, DxcHeading, DxcTabs, DxcParagraph } from '@dxc-technology/halstack-react';
-import { PageHeader, DataTable, StatusBadge } from '@shared/components';
+import { DxcFlex, DxcHeading, DxcTabs } from '@dxc-technology/halstack-react';
+import { PageHeader, DataTable, StatusBadge, StatCard } from '@shared/components';
 import { formatDate, formatCurrency } from '@shared/utils';
 import { referralService } from '../services/referralService';
 import { invoiceService } from '../services/invoiceService';
@@ -34,121 +34,118 @@ export default function VendorPortal() {
   };
 
   return (
-    <DxcFlex direction="column" gap="1.5rem" style={{ padding: '2rem' }}>
-      <PageHeader
-        title="Vendor Portal"
-        subtitle="Medical Examination Services Inc"
-      />
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-l)">
+        <PageHeader
+          title="Vendor Portal"
+          subtitle="Medical Examination Services Inc"
+        />
 
-      {/* Summary Cards */}
-      <DxcFlex gap="1.5rem" wrap="wrap">
-        <DxcCard style={{ minWidth: '250px', padding: '1.5rem' }}>
-          <DxcHeading level={4} text="Active Referrals" />
-          <DxcParagraph style={{ fontSize: '2rem', margin: '0.5rem 0' }}>
-            <strong>{referrals.filter((r) => r.status === 'IN_PROGRESS').length}</strong>
-          </DxcParagraph>
-          <DxcParagraph style={{ margin: 0 }}>In progress</DxcParagraph>
-        </DxcCard>
+        {/* Summary Cards */}
+        <DxcFlex gap="var(--spacing-gap-m)" wrap="wrap">
+          <StatCard
+            title="Active Referrals"
+            value={referrals.filter((r) => r.status === 'IN_PROGRESS').length}
+            subtitle="In progress"
+            variant="primary"
+          />
 
-        <DxcCard style={{ minWidth: '250px', padding: '1.5rem' }}>
-          <DxcHeading level={4} text="Pending Invoices" />
-          <DxcParagraph style={{ fontSize: '2rem', margin: '0.5rem 0' }}>
-            <strong>{invoices.filter((i) => i.status === 'PENDING_REVIEW').length}</strong>
-          </DxcParagraph>
-          <DxcParagraph style={{ margin: 0 }}>Awaiting approval</DxcParagraph>
-        </DxcCard>
+          <StatCard
+            title="Pending Invoices"
+            value={invoices.filter((i) => i.status === 'PENDING_REVIEW').length}
+            subtitle="Awaiting approval"
+            variant="warning"
+          />
 
-        <DxcCard style={{ minWidth: '250px', padding: '1.5rem' }}>
-          <DxcHeading level={4} text="Outstanding Payment" />
-          <DxcParagraph style={{ fontSize: '2rem', margin: '0.5rem 0' }}>
-            <strong>
-              {formatCurrency(
-                invoices
-                  .filter((i) => i.status === 'APPROVED')
-                  .reduce((sum, i) => sum + i.totalAmount, 0)
-              )}
-            </strong>
-          </DxcParagraph>
-          <DxcParagraph style={{ margin: 0 }}>Approved, pending payment</DxcParagraph>
-        </DxcCard>
+          <StatCard
+            title="Outstanding Payment"
+            value={formatCurrency(
+              invoices
+                .filter((i) => i.status === 'APPROVED')
+                .reduce((sum, i) => sum + i.totalAmount, 0)
+            )}
+            subtitle="Approved, pending payment"
+            variant="success"
+          />
+        </DxcFlex>
+
+        {/* Tabs */}
+        <DxcTabs
+          tabs={[{ label: 'My Referrals' }, { label: 'Invoices & Billing' }]}
+          activeTabIndex={activeTab}
+          onTabClick={setActiveTab}
+        />
+
+        {/* Referrals Tab */}
+        {activeTab === 0 && (
+          <div className="content-card">
+            <DxcHeading level={3} text="My Referrals" />
+
+            <DataTable
+              columns={[
+                { key: 'referralNumber', header: 'Referral #' },
+                { key: 'claimNumber', header: 'Claim #' },
+                { key: 'serviceType', header: 'Service' },
+                {
+                  key: 'assignedDate',
+                  header: 'Assigned',
+                  render: (row) => formatDate(row.assignedDate),
+                },
+                {
+                  key: 'dueDate',
+                  header: 'Due Date',
+                  render: (row) => (row.dueDate ? formatDate(row.dueDate) : '-'),
+                },
+                {
+                  key: 'status',
+                  header: 'Status',
+                  render: (row) => <StatusBadge status={row.status} />,
+                },
+              ]}
+              data={referrals}
+              loading={loading}
+              emptyMessage="No referrals assigned"
+            />
+          </div>
+        )}
+
+        {/* Invoices Tab */}
+        {activeTab === 1 && (
+          <div className="content-card">
+            <DxcHeading level={3} text="Invoices & Billing" />
+
+            <DataTable
+              columns={[
+                { key: 'invoiceNumber', header: 'Invoice #' },
+                { key: 'claimNumber', header: 'Claim #' },
+                {
+                  key: 'invoiceDate',
+                  header: 'Date',
+                  render: (row) => formatDate(row.invoiceDate),
+                },
+                {
+                  key: 'totalAmount',
+                  header: 'Amount',
+                  render: (row) => formatCurrency(row.totalAmount),
+                },
+                {
+                  key: 'status',
+                  header: 'Status',
+                  render: (row) => <StatusBadge status={row.status} />,
+                },
+                {
+                  key: 'paymentDate',
+                  header: 'Paid',
+                  render: (row) => (row.paymentDate ? formatDate(row.paymentDate) : '-'),
+                },
+              ]}
+              data={invoices}
+              loading={loading}
+              emptyMessage="No invoices submitted"
+            />
+          </div>
+        )}
       </DxcFlex>
-
-      {/* Tabs */}
-      <DxcTabs
-        tabs={[{ label: 'My Referrals' }, { label: 'Invoices & Billing' }]}
-        activeTabIndex={activeTab}
-        onTabClick={setActiveTab}
-      />
-
-      {/* Referrals Tab */}
-      {activeTab === 0 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
-          <DxcHeading level={3} text="My Referrals" />
-
-          <DataTable
-            columns={[
-              { key: 'referralNumber', header: 'Referral #' },
-              { key: 'claimNumber', header: 'Claim #' },
-              { key: 'serviceType', header: 'Service' },
-              {
-                key: 'assignedDate',
-                header: 'Assigned',
-                render: (row) => formatDate(row.assignedDate),
-              },
-              {
-                key: 'dueDate',
-                header: 'Due Date',
-                render: (row) => (row.dueDate ? formatDate(row.dueDate) : '-'),
-              },
-              {
-                key: 'status',
-                header: 'Status',
-                render: (row) => <StatusBadge status={row.status} />,
-              },
-            ]}
-            data={referrals}
-            loading={loading}
-            emptyMessage="No referrals assigned"
-          />
-        </DxcCard>
-      )}
-
-      {/* Invoices Tab */}
-      {activeTab === 1 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
-          <DxcHeading level={3} text="Invoices & Billing" />
-
-          <DataTable
-            columns={[
-              { key: 'invoiceNumber', header: 'Invoice #' },
-              { key: 'claimNumber', header: 'Claim #' },
-              {
-                key: 'invoiceDate',
-                header: 'Date',
-                render: (row) => formatDate(row.invoiceDate),
-              },
-              {
-                key: 'totalAmount',
-                header: 'Amount',
-                render: (row) => formatCurrency(row.totalAmount),
-              },
-              {
-                key: 'status',
-                header: 'Status',
-                render: (row) => <StatusBadge status={row.status} />,
-              },
-              {
-                key: 'paymentDate',
-                header: 'Paid',
-                render: (row) => (row.paymentDate ? formatDate(row.paymentDate) : '-'),
-              },
-            ]}
-            data={invoices}
-            loading={loading}
-            emptyMessage="No invoices submitted"
-          />
-        </DxcCard>
-      )}
-    </DxcFlex>
+    </div>
   );
 }
