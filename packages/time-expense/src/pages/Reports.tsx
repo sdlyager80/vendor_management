@@ -35,8 +35,9 @@ export default function Reports() {
     : 0;
 
   return (
-    <DxcFlex direction="column" gap="2rem" style={{ padding: '2rem' }}>
-      <PageHeader
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-xl)">
+        <PageHeader
         title="Reports & Analytics"
         subtitle="Time and expense performance metrics"
         actions={[
@@ -49,7 +50,7 @@ export default function Reports() {
       />
 
       {/* Summary Stats */}
-      <DxcFlex gap="1.5rem" wrap="wrap">
+      <DxcFlex gap="var(--spacing-gap-l)" wrap="wrap">
         <StatCard
           title="Weekly Hours"
           value={stats.weekHours.toFixed(1)}
@@ -76,10 +77,10 @@ export default function Reports() {
       </DxcFlex>
 
       {/* Detailed Reports */}
-      <DxcCard style={{ padding: '1.5rem' }}>
+      <div className="content-card">
         <DxcHeading level={3} text="Time Tracking Summary" />
 
-        <DxcFlex direction="column" gap="1.5rem" style={{ marginTop: '1rem' }}>
+        <DxcFlex direction="column" gap="var(--spacing-gap-l)" style={{ marginTop: 'var(--spacing-gap-m)' }}>
           <div>
             <DxcParagraph style={{ margin: 0, fontWeight: 600 }}>
               Today's Activity
@@ -116,14 +117,15 @@ export default function Reports() {
             </DxcParagraph>
           </div>
         </DxcFlex>
-      </DxcCard>
+      </div>
 
-      <DxcCard style={{ padding: '1.5rem' }}>
+      <div className="content-card">
         <DxcHeading level={3} text="Activity Breakdown" />
-        <DxcParagraph style={{ marginTop: '1rem' }}>
+        <DxcParagraph style={{ marginTop: 'var(--spacing-gap-m)' }}>
           Detailed activity breakdowns, trend analysis, and comparative reports will be available here.
         </DxcParagraph>
-      </DxcCard>
-    </DxcFlex>
+      </div>
+      </DxcFlex>
+    </div>
   );
 }

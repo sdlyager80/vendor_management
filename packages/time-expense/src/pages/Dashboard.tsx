@@ -45,8 +45,9 @@ export default function Dashboard() {
   }
 
   return (
-    <DxcFlex direction="column" gap="2rem" style={{ padding: '2rem' }}>
-      <PageHeader
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-xl)">
+        <PageHeader
         title="Time & Expense Dashboard"
         subtitle="Track your time and expenses across all claims"
         actions={[
@@ -64,7 +65,7 @@ export default function Dashboard() {
       />
 
       {/* KPI Cards */}
-      <DxcFlex gap="1.5rem" wrap="wrap">
+      <DxcFlex gap="var(--spacing-gap-l)" wrap="wrap">
         <StatCard
           title="Today's Hours"
           value={stats.todayHours.toFixed(1)}
@@ -93,11 +94,11 @@ export default function Dashboard() {
       </DxcFlex>
 
       {/* Recent Time Entries */}
-      <DxcCard style={{ padding: '1.5rem' }}>
+      <div className="content-card">
         <DxcFlex
           justifyContent="space-between"
           alignItems="center"
-          style={{ marginBottom: '1rem' }}
+          style={{ marginBottom: 'var(--spacing-gap-m)' }}
         >
           <DxcHeading level={3} text="Pending Time Entries" />
           <DxcButton
@@ -136,7 +137,8 @@ export default function Dashboard() {
           onRowClick={(entry) => navigate(`/time?entryId=${entry.id}`)}
           emptyMessage="No pending entries"
         />
-      </DxcCard>
-    </DxcFlex>
+      </div>
+      </DxcFlex>
+    </div>
   );
 }

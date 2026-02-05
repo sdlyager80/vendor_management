@@ -32,78 +32,80 @@ export default function ReferralList() {
   };
 
   return (
-    <DxcFlex direction="column" gap="1.5rem" style={{ padding: '2rem' }}>
-      <PageHeader
-        title="Referrals"
-        subtitle={`${referrals.length} referrals`}
-        actions={[
-          {
-            label: 'Create Referral',
-            onClick: () => navigate('/referrals/new'),
-            mode: 'primary',
-          },
-        ]}
-      />
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-l)">
+        <PageHeader
+          title="Referrals"
+          subtitle={`${referrals.length} referrals`}
+          actions={[
+            {
+              label: 'Create Referral',
+              onClick: () => navigate('/referrals/new'),
+              mode: 'primary',
+            },
+          ]}
+        />
 
-      {/* Filters */}
-      <DxcFlex gap="1rem" alignItems="flex-end">
-        <div style={{ width: '200px' }}>
-          <DxcSelect
-            label="Status"
-            options={[
-              { label: 'All Statuses', value: '' },
-              { label: 'Assigned', value: 'ASSIGNED' },
-              { label: 'Accepted', value: 'ACCEPTED' },
-              { label: 'In Progress', value: 'IN_PROGRESS' },
-              { label: 'Complete', value: 'COMPLETE' },
-            ]}
-            value={statusFilter}
-            onChange={(value) => setStatusFilter(value)}
-          />
-        </div>
+        {/* Filters */}
+        <DxcFlex gap="var(--spacing-gap-m)" alignItems="flex-end">
+          <div style={{ width: '200px' }}>
+            <DxcSelect
+              label="Status"
+              options={[
+                { label: 'All Statuses', value: '' },
+                { label: 'Assigned', value: 'ASSIGNED' },
+                { label: 'Accepted', value: 'ACCEPTED' },
+                { label: 'In Progress', value: 'IN_PROGRESS' },
+                { label: 'Complete', value: 'COMPLETE' },
+              ]}
+              value={statusFilter}
+              onChange={(value) => setStatusFilter(value)}
+            />
+          </div>
+        </DxcFlex>
+
+        {/* Referrals Table */}
+        <DataTable
+          columns={[
+            { key: 'referralNumber', header: 'Referral #', width: '140px' },
+            { key: 'claimNumber', header: 'Claim #', width: '140px' },
+            { key: 'claimantName', header: 'Claimant' },
+            { key: 'vendorName', header: 'Vendor' },
+            { key: 'serviceType', header: 'Service' },
+            {
+              key: 'assignedDate',
+              header: 'Assigned',
+              render: (row) => formatDate(row.assignedDate),
+            },
+            {
+              key: 'dueDate',
+              header: 'Due Date',
+              render: (row) => (row.dueDate ? formatDate(row.dueDate) : '-'),
+            },
+            {
+              key: 'status',
+              header: 'Status',
+              width: '150px',
+              render: (row) => <StatusBadge status={row.status} />,
+            },
+            {
+              key: 'slaBreach',
+              header: 'SLA',
+              width: '80px',
+              render: (row) =>
+                row.slaBreach ? (
+                  <span style={{ color: 'var(--color-red-600)', fontWeight: 'var(--font-weight-semibold)' }}>⚠ Breach</span>
+                ) : (
+                  <span style={{ color: 'var(--color-blue-600)' }}>✓ OK</span>
+                ),
+            },
+          ]}
+          data={referrals}
+          loading={loading}
+          onRowClick={(referral) => navigate(`/referrals/${referral.id}`)}
+          emptyMessage="No referrals found"
+        />
       </DxcFlex>
-
-      {/* Referrals Table */}
-      <DataTable
-        columns={[
-          { key: 'referralNumber', header: 'Referral #', width: '140px' },
-          { key: 'claimNumber', header: 'Claim #', width: '140px' },
-          { key: 'claimantName', header: 'Claimant' },
-          { key: 'vendorName', header: 'Vendor' },
-          { key: 'serviceType', header: 'Service' },
-          {
-            key: 'assignedDate',
-            header: 'Assigned',
-            render: (row) => formatDate(row.assignedDate),
-          },
-          {
-            key: 'dueDate',
-            header: 'Due Date',
-            render: (row) => (row.dueDate ? formatDate(row.dueDate) : '-'),
-          },
-          {
-            key: 'status',
-            header: 'Status',
-            width: '150px',
-            render: (row) => <StatusBadge status={row.status} />,
-          },
-          {
-            key: 'slaBreach',
-            header: 'SLA',
-            width: '80px',
-            render: (row) =>
-              row.slaBreach ? (
-                <span style={{ color: '#D0011B', fontWeight: 600 }}>⚠ Breach</span>
-              ) : (
-                <span style={{ color: '#0095FF' }}>✓ OK</span>
-              ),
-          },
-        ]}
-        data={referrals}
-        loading={loading}
-        onRowClick={(referral) => navigate(`/referrals/${referral.id}`)}
-        emptyMessage="No referrals found"
-      />
-    </DxcFlex>
+    </div>
   );
 }

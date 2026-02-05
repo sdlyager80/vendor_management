@@ -33,8 +33,9 @@ export default function Configuration() {
   };
 
   return (
-    <DxcFlex direction="column" gap="1.5rem" style={{ padding: '2rem' }}>
-      <PageHeader
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-l)">
+        <PageHeader
         title="Configuration"
         subtitle="Manage activity codes, expense types, and billing settings"
       />
@@ -53,7 +54,7 @@ export default function Configuration() {
 
       {/* Activity Codes Tab */}
       {activeTab === 0 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="Activity Codes" />
 
           <DataTable
@@ -85,12 +86,12 @@ export default function Configuration() {
             loading={loading}
             emptyMessage="No activity codes configured"
           />
-        </DxcCard>
+        </div>
       )}
 
-      {/* Expense Types Tab */}
+      {/*Expense Types Tab */}
       {activeTab === 1 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="Expense Types" />
 
           <DataTable
@@ -123,28 +124,29 @@ export default function Configuration() {
             loading={loading}
             emptyMessage="No expense types configured"
           />
-        </DxcCard>
+        </div>
       )}
 
-      {/* Rate Schedules Tab */}
+      {/*Rate Schedules Tab */}
       {activeTab === 2 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="Rate Schedules" />
-          <p style={{ marginTop: '1rem' }}>
+          <p style={{ marginTop: 'var(--spacing-gap-m)' }}>
             Rate schedule management for role levels and carrier-specific overrides coming soon.
           </p>
-        </DxcCard>
+        </div>
       )}
 
-      {/* Event Triggers Tab */}
+      {/*Event Triggers Tab */}
       {activeTab === 3 && (
-        <DxcCard style={{ padding: '1.5rem' }}>
+        <div className="content-card">
           <DxcHeading level={3} text="Event Triggers" />
-          <p style={{ marginTop: '1rem' }}>
+          <p style={{ marginTop: 'var(--spacing-gap-m)' }}>
             Configure automatic time capture from Assure Claims events coming soon.
           </p>
-        </DxcCard>
+        </div>
       )}
-    </DxcFlex>
+      </DxcFlex>
+    </div>
   );
 }

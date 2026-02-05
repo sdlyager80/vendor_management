@@ -59,83 +59,85 @@ export default function InvoiceList() {
     .reduce((sum, i) => sum + i.totalAmount, 0);
 
   return (
-    <DxcFlex direction="column" gap="1.5rem" style={{ padding: '2rem' }}>
-      <PageHeader
-        title="Invoices"
-        subtitle={`${invoices.length} invoices • ${formatCurrency(totalPending)} pending`}
-      />
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-l)">
+        <PageHeader
+          title="Invoices"
+          subtitle={`${invoices.length} invoices • ${formatCurrency(totalPending)} pending`}
+        />
 
-      {/* Filters */}
-      <DxcFlex gap="1rem" alignItems="flex-end">
-        <div style={{ width: '200px' }}>
-          <DxcSelect
-            label="Status"
-            options={[
-              { label: 'All Statuses', value: '' },
-              { label: 'Pending Review', value: 'PENDING_REVIEW' },
-              { label: 'Approved', value: 'APPROVED' },
-              { label: 'Rejected', value: 'REJECTED' },
-              { label: 'Paid', value: 'PAID' },
-            ]}
-            value={statusFilter}
-            onChange={(value) => setStatusFilter(value)}
-          />
-        </div>
+        {/* Filters */}
+        <DxcFlex gap="var(--spacing-gap-m)" alignItems="flex-end">
+          <div style={{ width: '200px' }}>
+            <DxcSelect
+              label="Status"
+              options={[
+                { label: 'All Statuses', value: '' },
+                { label: 'Pending Review', value: 'PENDING_REVIEW' },
+                { label: 'Approved', value: 'APPROVED' },
+                { label: 'Rejected', value: 'REJECTED' },
+                { label: 'Paid', value: 'PAID' },
+              ]}
+              value={statusFilter}
+              onChange={(value) => setStatusFilter(value)}
+            />
+          </div>
+        </DxcFlex>
+
+        {/* Invoices Table */}
+        <DataTable
+          columns={[
+            { key: 'invoiceNumber', header: 'Invoice #', width: '140px' },
+            { key: 'vendorName', header: 'Vendor' },
+            { key: 'claimNumber', header: 'Claim #', width: '140px' },
+            {
+              key: 'invoiceDate',
+              header: 'Invoice Date',
+              render: (row) => formatDate(row.invoiceDate),
+            },
+            {
+              key: 'dueDate',
+              header: 'Due Date',
+              render: (row) => formatDate(row.dueDate),
+            },
+            {
+              key: 'totalAmount',
+              header: 'Amount',
+              render: (row) => formatCurrency(row.totalAmount),
+            },
+            {
+              key: 'status',
+              header: 'Status',
+              width: '150px',
+              render: (row) => <StatusBadge status={row.status} />,
+            },
+            {
+              key: 'actions',
+              header: 'Actions',
+              width: '200px',
+              render: (row) =>
+                row.status === 'PENDING_REVIEW' ? (
+                  <DxcFlex gap="var(--spacing-gap-s)">
+                    <DxcButton
+                      label="Approve"
+                      mode="text"
+                      onClick={(e) => handleApprove(row.id, e)}
+                    />
+                    <DxcButton
+                      label="Reject"
+                      mode="text"
+                      onClick={(e) => handleReject(row.id, e)}
+                    />
+                  </DxcFlex>
+                ) : null,
+            },
+          ]}
+          data={invoices}
+          loading={loading}
+          onRowClick={(invoice) => navigate(`/invoices/${invoice.id}`)}
+          emptyMessage="No invoices found"
+        />
       </DxcFlex>
-
-      {/* Invoices Table */}
-      <DataTable
-        columns={[
-          { key: 'invoiceNumber', header: 'Invoice #', width: '140px' },
-          { key: 'vendorName', header: 'Vendor' },
-          { key: 'claimNumber', header: 'Claim #', width: '140px' },
-          {
-            key: 'invoiceDate',
-            header: 'Invoice Date',
-            render: (row) => formatDate(row.invoiceDate),
-          },
-          {
-            key: 'dueDate',
-            header: 'Due Date',
-            render: (row) => formatDate(row.dueDate),
-          },
-          {
-            key: 'totalAmount',
-            header: 'Amount',
-            render: (row) => formatCurrency(row.totalAmount),
-          },
-          {
-            key: 'status',
-            header: 'Status',
-            width: '150px',
-            render: (row) => <StatusBadge status={row.status} />,
-          },
-          {
-            key: 'actions',
-            header: 'Actions',
-            width: '200px',
-            render: (row) =>
-              row.status === 'PENDING_REVIEW' ? (
-                <DxcFlex gap="0.5rem">
-                  <DxcButton
-                    label="Approve"
-                    mode="text"
-                    onClick={(e) => handleApprove(row.id, e)}
-                  />
-                  <DxcButton
-                    label="Reject"
-                    mode="text"
-                    onClick={(e) => handleReject(row.id, e)}
-                  />
-                </DxcFlex>
-              ) : null,
-          },
-        ]}
-        data={invoices}
-        loading={loading}
-        onRowClick={(invoice) => navigate(`/invoices/${invoice.id}`)}
-        emptyMessage="No invoices found"
-      />
-    </DxcFlex>
+    </div>
   );
 }

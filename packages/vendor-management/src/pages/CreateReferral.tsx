@@ -2,9 +2,11 @@ import { DxcHeading, DxcParagraph, DxcFlex } from '@dxc-technology/halstack-reac
 
 export default function CreateReferral() {
   return (
-    <DxcFlex direction="column" gap="1rem" style={{ padding: '2rem' }}>
-      <DxcHeading level={1} text="Create Referral" />
-      <DxcParagraph>Create referral form - Coming soon</DxcParagraph>
-    </DxcFlex>
+    <div className="page-container">
+      <DxcFlex direction="column" gap="var(--spacing-gap-m)">
+        <DxcHeading level={1} text="Create Referral" />
+        <DxcParagraph>Create referral form - Coming soon</DxcParagraph>
+      </DxcFlex>
+    </div>
   );
 }
