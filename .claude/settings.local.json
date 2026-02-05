@@ -9,7 +9,8 @@
       "Bash(./verify-setup.sh:*)",
       "Bash(npm view:*)",
       "Bash(npm install:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(echo:*)"
     ]
   }
 }

@@ -1,10 +1,109 @@
-import { DxcHeading, DxcParagraph, DxcFlex } from '@dxc-technology/halstack-react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { DxcFlex, DxcSelect } from '@dxc-technology/halstack-react';
+import { PageHeader, DataTable, StatusBadge } from '@shared/components';
+import { formatDate } from '@shared/utils';
+import { referralService } from '../services/referralService';
+import type { Referral } from '@shared/types';
 
 export default function ReferralList() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [referrals, setReferrals] = useState<Referral[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [statusFilter, setStatusFilter] = useState(searchParams.get('status') || '');
+
+  useEffect(() => {
+    loadReferrals();
+  }, [statusFilter]);
+
+  const loadReferrals = async () => {
+    try {
+      setLoading(true);
+      const data = await referralService.getReferrals({
+        status: statusFilter || undefined,
+      });
+      setReferrals(data);
+    } catch (error) {
+      console.error('Failed to load referrals:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <DxcFlex direction="column" gap="1rem" style={{ padding: '2rem' }}>
-      <DxcHeading level={1} text="Referrals" />
-      <DxcParagraph>Referral list view - Coming soon</DxcParagraph>
+    <DxcFlex direction="column" gap="1.5rem" style={{ padding: '2rem' }}>
+      <PageHeader
+        title="Referrals"
+        subtitle={`${referrals.length} referrals`}
+        actions={[
+          {
+            label: 'Create Referral',
+            onClick: () => navigate('/referrals/new'),
+            mode: 'primary',
+          },
+        ]}
+      />
+
+      {/* Filters */}
+      <DxcFlex gap="1rem" alignItems="flex-end">
+        <div style={{ width: '200px' }}>
+          <DxcSelect
+            label="Status"
+            options={[
+              { label: 'All Statuses', value: '' },
+              { label: 'Assigned', value: 'ASSIGNED' },
+              { label: 'Accepted', value: 'ACCEPTED' },
+              { label: 'In Progress', value: 'IN_PROGRESS' },
+              { label: 'Complete', value: 'COMPLETE' },
+            ]}
+            value={statusFilter}
+            onChange={(value) => setStatusFilter(value)}
+          />
+        </div>
+      </DxcFlex>
+
+      {/* Referrals Table */}
+      <DataTable
+        columns={[
+          { key: 'referralNumber', header: 'Referral #', width: '140px' },
+          { key: 'claimNumber', header: 'Claim #', width: '140px' },
+          { key: 'claimantName', header: 'Claimant' },
+          { key: 'vendorName', header: 'Vendor' },
+          { key: 'serviceType', header: 'Service' },
+          {
+            key: 'assignedDate',
+            header: 'Assigned',
+            render: (row) => formatDate(row.assignedDate),
+          },
+          {
+            key: 'dueDate',
+            header: 'Due Date',
+            render: (row) => (row.dueDate ? formatDate(row.dueDate) : '-'),
+          },
+          {
+            key: 'status',
+            header: 'Status',
+            width: '150px',
+            render: (row) => <StatusBadge status={row.status} />,
+          },
+          {
+            key: 'slaBreach',
+            header: 'SLA',
+            width: '80px',
+            render: (row) =>
+              row.slaBreach ? (
+                <span style={{ color: '#D0011B', fontWeight: 600 }}>⚠ Breach</span>
+              ) : (
+                <span style={{ color: '#0095FF' }}>✓ OK</span>
+              ),
+          },
+        ]}
+        data={referrals}
+        loading={loading}
+        onRowClick={(referral) => navigate(`/referrals/${referral.id}`)}
+        emptyMessage="No referrals found"
+      />
     </DxcFlex>
   );
 }
