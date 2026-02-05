@@ -15,7 +15,8 @@
       "WebSearch",
       "WebFetch(domain:developer.dxc.com)",
       "Bash(curl:*)",
-      "Bash(git remote add:*)"
+      "Bash(git remote add:*)",
+      "Bash(git push:*)"
     ]
   }
 }
