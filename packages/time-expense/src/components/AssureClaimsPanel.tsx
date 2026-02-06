@@ -27,10 +27,10 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
   return (
     <div
       style={{
-        background: 'linear-gradient(135deg, #1a237e 0%, #283593 100%)',
-        borderRadius: '12px',
-        padding: '24px',
-        color: '#FFFFFF',
+        backgroundColor: 'var(--color-blue-600)',
+        borderRadius: 'var(--border-radius-m)',
+        padding: 'var(--spacing-padding-l)',
+        color: 'var(--color-white)',
       }}
     >
       <DxcFlex direction="column" gap="var(--spacing-gap-l)">
@@ -40,7 +40,7 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
             <span className="material-icons" style={{ fontSize: '24px' }}>
               sync
             </span>
-            <DxcHeading level={3} text="Assure Claims Integration" style={{ color: '#FFFFFF' }} />
+            <DxcHeading level={3} text="Assure Claims Integration" style={{ color: 'var(--color-white)' }} />
           </DxcFlex>
           <DxcFlex gap="var(--spacing-gap-xs)" alignItems="center">
             <div
@@ -48,11 +48,11 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                backgroundColor: '#4caf50',
+                backgroundColor: 'var(--color-green-600)',
                 animation: 'pulse 2s infinite',
               }}
             />
-            <DxcTypography fontSize="font-scale-01" color="rgba(255, 255, 255, 0.9)">
+            <DxcTypography fontSize="font-scale-01" color="var(--color-white)">
               Live
             </DxcTypography>
           </DxcFlex>
@@ -61,28 +61,28 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
         {/* Metrics */}
         <DxcFlex gap="var(--spacing-gap-l)" wrap="wrap">
           <div>
-            <DxcTypography fontSize="font-scale-01" color="rgba(255, 255, 255, 0.7)">
+            <DxcTypography fontSize="font-scale-01" color="var(--color-white)">
               Events
             </DxcTypography>
-            <DxcTypography fontSize="font-scale-04" fontWeight="font-weight-semibold" color="#FFFFFF">
+            <DxcTypography fontSize="font-scale-04" fontWeight="font-weight-semibold" color="var(--color-white)">
               {events.length}
             </DxcTypography>
           </div>
 
           <div>
-            <DxcTypography fontSize="font-scale-01" color="rgba(255, 255, 255, 0.7)">
+            <DxcTypography fontSize="font-scale-01" color="var(--color-white)">
               Auto-Billed
             </DxcTypography>
-            <DxcTypography fontSize="font-scale-04" fontWeight="font-weight-semibold" color="#FFFFFF">
+            <DxcTypography fontSize="font-scale-04" fontWeight="font-weight-semibold" color="var(--color-white)">
               {formatCurrency(totalAutoBilled)}
             </DxcTypography>
           </div>
 
           <div>
-            <DxcTypography fontSize="font-scale-01" color="rgba(255, 255, 255, 0.7)">
+            <DxcTypography fontSize="font-scale-01" color="var(--color-white)">
               Pending Review
             </DxcTypography>
-            <DxcTypography fontSize="font-scale-04" fontWeight="font-weight-semibold" color="#FFFFFF">
+            <DxcTypography fontSize="font-scale-04" fontWeight="font-weight-semibold" color="var(--color-white)">
               {pendingReviewEvents.length}
             </DxcTypography>
           </div>
@@ -93,7 +93,7 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
           <DxcTypography
             fontSize="font-scale-02"
             fontWeight="font-weight-semibold"
-            color="rgba(255, 255, 255, 0.9)"
+            color="var(--color-white)"
             style={{ marginBottom: '12px' }}
           >
             Recent Events
@@ -112,11 +112,11 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
               <div
                 key={event.id}
                 style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  backgroundColor: 'var(--color-blue-700)',
                   borderRadius: '8px',
                   padding: '12px',
                   borderLeft: `4px solid ${
-                    event.status === 'AUTO_BILLED' ? '#4caf50' : '#ff9800'
+                    event.status === 'AUTO_BILLED' ? 'var(--color-green-600)' : 'var(--color-orange-600)'
                   }`,
                 }}
               >
@@ -127,14 +127,14 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
                       <DxcTypography
                         fontSize="font-scale-02"
                         fontWeight="font-weight-semibold"
-                        color="#FFFFFF"
+                        color="var(--color-white)"
                       >
                         {event.eventTitle}
                       </DxcTypography>
-                      <DxcTypography fontSize="font-scale-01" color="rgba(255, 255, 255, 0.8)">
+                      <DxcTypography fontSize="font-scale-01" color="var(--color-white)">
                         {event.eventDescription}
                       </DxcTypography>
-                      <DxcTypography fontSize="font-scale-01" color="rgba(255, 255, 255, 0.6)">
+                      <DxcTypography fontSize="font-scale-01" color="var(--color-white)">
                         {formatDateTime(event.timestamp)}
                       </DxcTypography>
                     </div>
@@ -145,7 +145,7 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
                       <DxcTypography
                         fontSize="font-scale-02"
                         fontWeight="font-weight-semibold"
-                        color="#FFFFFF"
+                        color="var(--color-white)"
                       >
                         {formatCurrency(event.autoBillAmount)}
                       </DxcTypography>
@@ -156,9 +156,9 @@ export function AssureClaimsPanel({ claimNumber, events }: AssureClaimsPanelProp
                           borderRadius: '4px',
                           backgroundColor:
                             event.status === 'AUTO_BILLED'
-                              ? 'rgba(76, 175, 80, 0.3)'
-                              : 'rgba(255, 152, 0, 0.3)',
-                          color: '#FFFFFF',
+                              ? 'var(--color-green-700)'
+                              : 'var(--color-orange-700)',
+                          color: 'var(--color-white)',
                         }}
                       >
                         {event.status === 'AUTO_BILLED' ? '✓ Billed' : '⚠ Review'}

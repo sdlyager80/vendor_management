@@ -136,9 +136,9 @@ export function TimerModal({
         {/* Timer Display */}
         <div
           style={{
-            background: 'linear-gradient(135deg, #4DD0E1 0%, #0095FF 100%)',
-            borderRadius: '12px',
-            padding: '32px',
+            backgroundColor: 'var(--color-blue-600)',
+            borderRadius: 'var(--border-radius-m)',
+            padding: 'var(--spacing-padding-xl)',
             textAlign: 'center',
           }}
         >
@@ -153,7 +153,7 @@ export function TimerModal({
 
           {currentAdjuster && (
             <DxcFlex direction="column" gap="var(--spacing-gap-xs)" style={{ marginTop: '16px' }}>
-              <DxcTypography fontSize="font-scale-02" color="rgba(255, 255, 255, 0.9)">
+              <DxcTypography fontSize="font-scale-02" color="var(--color-white)">
                 {(elapsedSeconds / 3600).toFixed(2)} hours × {formatCurrency(currentAdjuster.defaultRate)}/hr
               </DxcTypography>
               <DxcTypography fontSize="font-scale-04" fontWeight="font-weight-semibold" color="#FFFFFF">

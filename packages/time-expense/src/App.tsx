@@ -20,13 +20,13 @@ function AppContent() {
 
   const getAdjusterColor = (roleName: string) => {
     const colors: Record<string, string> = {
-      'Senior Adjuster': '#68b3c8',
-      'Manager': '#7b1fa2',
-      'Staff Adjuster': '#388e3c',
-      'Junior Adjuster': '#f57c00',
-      'Administrative': '#9e9e9e',
+      'Senior Adjuster': 'var(--color-blue-600)',
+      'Manager': 'var(--color-purple-600)',
+      'Staff Adjuster': 'var(--color-green-600)',
+      'Junior Adjuster': 'var(--color-orange-600)',
+      'Administrative': 'var(--color-grey-600)',
     };
-    return colors[roleName] || '#68b3c8';
+    return colors[roleName] || 'var(--color-blue-600)';
   };
 
   return (
@@ -42,10 +42,10 @@ function AppContent() {
         {currentAdjuster && (
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '16px' }}>
             <DxcFlex direction="column" gap="4px" alignItems="flex-end">
-              <DxcTypography fontSize="font-scale-02" fontWeight="font-weight-semibold" color="#FFFFFF">
+              <DxcTypography fontSize="font-scale-02" fontWeight="font-weight-semibold" color="var(--color-white)">
                 {currentAdjuster.firstName} {currentAdjuster.lastName}
               </DxcTypography>
-              <DxcTypography fontSize="font-scale-01" color="rgba(255, 255, 255, 0.8)">
+              <DxcTypography fontSize="font-scale-01" color="var(--color-white)">
                 {currentAdjuster.roleName} • {formatCurrency(currentAdjuster.defaultRate)}/hr
               </DxcTypography>
             </DxcFlex>
@@ -58,7 +58,7 @@ function AppContent() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#FFFFFF',
+                color: 'var(--color-white)',
                 fontWeight: 600,
                 fontSize: '14px',
               }}

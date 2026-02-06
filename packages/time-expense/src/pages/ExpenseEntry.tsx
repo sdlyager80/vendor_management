@@ -187,7 +187,7 @@ export default function ExpenseEntryPage() {
             />
 
             {selectedType?.receiptRequired && (
-              <p style={{ margin: 0, color: '#0095FF', fontSize: '0.875rem' }}>
+              <p style={{ margin: 0, color: 'var(--color-blue-600)', fontSize: 'var(--font-scale-01)' }}>
                 ⓘ Receipt required for this expense type
               </p>
             )}
